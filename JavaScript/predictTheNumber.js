@@ -1,9 +1,12 @@
 const readline = require('readline');
+
+
 const programeConsole = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
+// select the random number
 const secretNumber = Math.floor(Math.random() * 20 +1);
 console.log(secretNumber);
 let guessCount = 0;
@@ -11,11 +14,15 @@ let guessCount = 0;
 function askUserForGuess() {
   programeConsole.question('Guess a number between 1 and 20: ', (answer) => {
     const guess = parseInt(answer);
+
+    // validate the input
     if (isNaN(guess)) {
       console.log('Please enter a valid number.');
       askUserForGuess();
     } else {
       guessCount++;
+
+      // check the guess
       if (guess === secretNumber) {
         console.log('You Won!');
         programeConsole.close();
