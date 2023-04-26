@@ -1,34 +1,9 @@
 public class Car
 {
 
-    public String Model;
-    public String Make;
-    public int CurrentSpeed;
-    public bool EnginRunning;
+    public String Model { get; set; }
+    public String Make { get; set; }
+    public int CurrentSpeed { get; }
+    public bool EnginRunning { get; }
     
-    public void startEngin()
-    {
-        EnginRunning = true;
-    }
-
-    public void stopEngin()
-    {
-        EnginRunning = false;
-    }
-
-    public void accelerate(int speed)
-    {
-        if (EnginRunning)
-            CurrentSpeed += speed;
-        else
-            Console.WriteLine("The car is stopped");
-    }
-
-    public void decelarate(int speed)
-    {
-        if (EnginRunning)
-            CurrentSpeed -= speed;
-        else
-            Console.WriteLine("The car is stopped");
-    }
 }

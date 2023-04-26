@@ -1,4 +1,5 @@
 ﻿
-Console.WriteLine("Hello, World!");
+Car myCar = new();
+myCar.Make = "Toyota";
 
 
