@@ -1,29 +1,38 @@
-﻿class Program
+﻿Console.WriteLine("Welcome to the Number Guessing Game!");
+
+// select random number 1-20
+int correct = Random.Shared.Next(1, 21);
+Console.WriteLine(correct);
+
+FileHandler highScore = new();
+
+// they plays has three guesses/rounds
+for (int round = 0; round < 3; round++)
 {
-    private static void Main(string[] args)
+    // ask the player for a guess
+    Console.WriteLine("Please enter your guess between 1 and 20:");
+    string guessValue = Console.ReadLine();
+    int guess = int.Parse(guessValue);
+
+    // is the guess correct?
+    if (guess == correct)
     {
-        // select the randoom number
-        var random = new Random();
-        var number = random.Next(1,20);
-        Console.WriteLine(number);
-
-        // player has 3 attempts
-        for(var i = 0; i < 3; i++) 
-        {
-            Console.Write(string.Format("Prediction Attempt {0}: ", i + 1));
-            var input = int.Parse(Console.ReadLine());
-
-            // check the guess
-            if(number == input)
-            {
-                Console.WriteLine("You Won!");
-                return;
-            }
-            else if(number > input)
-                Console.WriteLine("The number is grater than {0}.", input);
-            else
-                Console.WriteLine("The number is less than {0}.", input);
-        }
-        Console.WriteLine("You Lost!");
+        Console.WriteLine("Correct! You win the game!");
+        highScore.RecordPlayerScore(round + 1);
+        break;
+    }
+    else if (guess < correct)
+    {
+        Console.WriteLine("The correct number is larger.");
+    }
+    else
+    {
+        Console.WriteLine("The correct number is smaller.");
     }
 }
+
+Console.WriteLine("Game ends.");
+
+// high score display
+
+highScore.DisplayHighScoreList();
