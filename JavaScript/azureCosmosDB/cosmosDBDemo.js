@@ -1,7 +1,7 @@
 const { CosmosClient } = require('@azure/cosmos');
 
-const endpoint = '';
-const key = '';
+const endpoint = ' https://fullstackbootcamp.documents.azure.com:443/';
+const key = 'ggin9VzmcjzctgLyh9NGAUKHuG4EGbZnSroyUeptddNkDygZKSGOMJ2FJJ2nRR0B4vyFC5tSoY7vACDbTIeIZg==';
 
 const databaseName = 'movieWorld';
 const containerName = `movies`;
@@ -10,9 +10,9 @@ const partitionKeyPath = ['/categoryId']
 const cosmosClient = new CosmosClient({ endpoint, key });
 
 const movie = {
-    "title": "A Walk to Remember",
+    "title": "The Hangover part III",
     "genre": {
-      "name": "Romantic"
+      "name": "Comedy"
     },
     "dailyRentalRate": 60,
     "numberInStock": 100
@@ -37,13 +37,39 @@ async function addMovie(movie) {
     return resource;
   }
 
+  async function getMovie(id) {
+    const container = cosmosClient.database(databaseName).container(containerName);
+    const { resource } = await container.item(id).read();
+    return resource;
+  }
+
+  async function getAllMovies() {
+    const querySpec = {
+        query: "select * from movies"
+    };
+    const container = cosmosClient.database(databaseName).container(containerName);
+    const { resources } = await container.items.query(querySpec).fetchAll();
+    return resources;
+  }
+
+  async function deleteMovie(id) {
+    const container = cosmosClient.database(databaseName).container(containerName);
+    const { statusCode } = await container.item(id).delete();
+    console.log(`${statusCode==204 ? `Item deleted` : `Item not deleted`}`);
+  }
+
 
 cosmoDemo();
 
 async function main() {
-    // Add a document
+    
     const addedMovie = await addMovie(movie);
+    const movieList = await getAllMovies();
+    const movieDetails = await getMovie(addedMovie.id);
     console.log('Added movie:', addedMovie);
+    console.log('Movie Details:', movieDetails);
+    console.log('Movie list: ', movieList)
+    deleteMovie('b43e67cf-6047-4a96-b241-7e0adab01c92');
 }
 
 main().catch((error) => {
