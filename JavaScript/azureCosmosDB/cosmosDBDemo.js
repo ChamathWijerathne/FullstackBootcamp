@@ -1,7 +1,7 @@
 const { CosmosClient } = require('@azure/cosmos');
 
 const endpoint = ' https://fullstackbootcamp.documents.azure.com:443/';
-const key = 'ggin9VzmcjzctgLyh9NGAUKHuG4EGbZnSroyUeptddNkDygZKSGOMJ2FJJ2nRR0B4vyFC5tSoY7vACDbTIeIZg==';
+const key = '';
 
 const databaseName = 'movieWorld';
 const containerName = `movies`;
